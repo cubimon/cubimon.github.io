@@ -68,7 +68,7 @@
         let textNumber = 1;
         for (const textDefinition of meme.textDefinitions) {
           let text = searchParams.get(`text${textNumber}`).toUpperCase();
-          let lines = text.split('\\n');
+          let lines = text.split('\\N');
           for (let line of lines) {
             const desiredWidth = canvas.width * textDefinition.width - 2 * padding;
             let [fontSize, gap] = optimizeFontSize(context, line, desiredWidth);
@@ -83,7 +83,7 @@
         for (const textDefinition of meme.textDefinitions) {
           const desiredWidth = canvas.width * textDefinition.width - 2 * padding;
           let text = searchParams.get(`text${textNumber}`).toUpperCase();
-          let lines = text.split('\\n');
+          let lines = text.split('\\N');
           let lineIndex = 0;
           for (let line of lines) {
             let [xAlignment, yAlignment] = textDefinition.alignment.split(' ');
