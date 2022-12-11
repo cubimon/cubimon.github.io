@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body onload="init()">
+  <script>
+
+    const memes = [
+      {
+        name: "ghandi",
+        imageUrl: "images/ghandi.jpg",
+        textDefinitions: [
+          {
+            x: 0.5,
+            y: 0,
+            height: 0.8,
+            width: 0.5,
+            alignment: 'center center'
+          }
+        ]
+      }
+    ]
+    const padding = 10;
+
+    function setFontSize(context, fontSize) {
+      context.font = `${fontSize}px impact`;
+      const lineWidth = fontSize / 6;
+      context.lineWidth = lineWidth;
+    }
+
+    function drawText(context, text, x, y, width) {
+      context.strokeStyle = 'black';
+      context.strokeText(text, x, y);
+      context.fillStyle = 'white';
+      context.fillText(text, x, y);
+    }
+
+    function optimizeFontSize(context, text, desiredWidth) {
+      for (let fontSize = 1; fontSize < 200; fontSize++) {
+        setFontSize(context, fontSize);
+        let textMetrics = context.measureText(text);
+        if (textMetrics.width > desiredWidth) {
+          fontSize -= 1;
+          setFontSize(context, fontSize);
+          textMetrics = context.measureText(text);
+          const gap = (desiredWidth - textMetrics.width) / 2;
+          return [fontSize, gap];
+        }
+      }
+    }
+
+    function init() {
+      const searchParams = new URLSearchParams(window.location.search);
+      const meme = memes.find(meme => meme.name == searchParams.get("name"));
+      const image = new Image();
+      image.src = meme.imageUrl;
+      image.addEventListener('load', () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        const context = canvas.getContext('2d');
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        // find font size
+        let fontSizes = [];
+        let textNumber = 1;
+        for (const textDefinition of meme.textDefinitions) {
+          let text = searchParams.get(`text${textNumber}`);
+          let lines = text.split('\\n');
+          for (let line of lines) {
+            const desiredWidth = canvas.width * textDefinition.width - 2 * padding;
+            let [fontSize, gap] = optimizeFontSize(context, line, desiredWidth);
+            fontSizes.push(fontSize);
+          }
+          textNumber += 1;
+        }
+        const fontSize = Math.min(...fontSizes);
+        setFontSize(context, fontSize);
+        // draw texts
+        textNumber = 1;
+        for (const textDefinition of meme.textDefinitions) {
+          const desiredWidth = canvas.width * textDefinition.width - 2 * padding;
+          let text = searchParams.get(`text${textNumber}`);
+          let lines = text.split('\\n');
+          let lineIndex = 0;
+          for (let line of lines) {
+            let [xAlignment, yAlignment] = textDefinition.alignment.split(' ');
+            // x left
+            let x = canvas.width * textDefinition.x + padding;
+            if (xAlignment.includes('center')) {
+              x += (desiredWidth - context.measureText(line).width) / 2;
+            } else if (xAlignment.includes('right')) {
+              x += desiredWidth - context.measureText(line).width;
+            }
+            // y top
+            let y = canvas.height * textDefinition.y + padding + fontSize;
+            if (yAlignment.includes('top')) {
+              y += lineIndex * fontSize;
+            } else if (yAlignment.includes('center')) {
+              y = canvas.height * textDefinition.y + (canvas.height * textDefinition.height - lines.length * fontSize) / 2;
+              y += lineIndex * fontSize + padding + fontSize;
+            } else if (yAlignment.includes('bottom')) {
+              y = canvas.height * textDefinition.y + canvas.height * textDefinition.height - padding;
+              y -= (lines.length - 1 - lineIndex) * fontSize;
+            }
+            drawText(context, line, x, y, desiredWidth);
+            lineIndex += 1;
+          }
+          textNumber = 1;
+        }
+        document.body.appendChild(canvas);
+      });
+    }
+  </script>
+  <style>
+    canvas {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</body>
+
+</html>
