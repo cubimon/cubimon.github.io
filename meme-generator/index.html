@@ -7,7 +7,6 @@
 
 <body onload="init()">
   <script>
-
     const memes = [
       {
         name: "ghandi",
@@ -110,16 +109,13 @@
           }
           textNumber = 1;
         }
-        document.body.appendChild(canvas);
+        const renderedImageData = canvas.toDataURL('image/png');
+        const renderedImage = new Image();
+        renderedImage.src = renderedImageData;
+        document.body.appendChild(renderedImage);
       });
     }
   </script>
-  <style>
-    canvas {
-      width: 100%;
-      height: auto;
-    }
-  </style>
 </body>
 
 </html>
