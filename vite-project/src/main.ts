@@ -23,7 +23,7 @@ let camera: Camera = new PerspectiveCamera();
 
 loader.load(
   //"PigeonPark_Scene_Komplet.glb",
-  "PigeonPark_Scene_5- 27-2_embedded_unitless.gltf",
+  "assets/PigeonPark_Scene_5- 27-2_embedded_unitless.gltf",
   function (gltf: GLTF) {
     scene.add(gltf.scene);
     //const light = new THREE.AmbientLight( 0x404040 ); // soft white light
