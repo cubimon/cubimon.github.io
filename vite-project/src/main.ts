@@ -22,8 +22,8 @@ let camera: Camera = new PerspectiveCamera();
 
 loader.load(
   //"PigeonPark_Scene_Komplet.glb",
-  // "PigeonPark_Scene_5- 27-2_embedded_unitless.gltf",
-  "assets/PigeonPark_Scene_5- 27-2_embedded_unitless.gltf",
+  "PigeonPark_Scene_5- 27-2_embedded_unitless.gltf",
+  // "assets/PigeonPark_Scene_5- 27-2_embedded_unitless.gltf",
   function (gltf: GLTF) {
     scene.add(gltf.scene);
     console.log(gltf);
@@ -60,9 +60,9 @@ function click(event: MouseEvent) {
   raycaster.setFromCamera(pointer, camera);
   const intersects = raycaster.intersectObjects(scene.children);
 
-  for (const intersect of intersects) {
-    alert(`clicked on ${intersect.object.name}`);
-  }
+  //for (const intersect of intersects) {
+  //  alert(`clicked on ${intersect.object.name}`);
+  //}
 
   renderer.render(scene, camera);
 }
