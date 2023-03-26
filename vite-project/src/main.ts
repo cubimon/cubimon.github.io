@@ -80,3 +80,24 @@ function resizeCanvas() {
   renderer.render(scene, camera);
 }
 window.addEventListener("resize", resizeCanvas, false);
+
+window.addEventListener("load", () => {
+  const teamPopup = document.querySelector(".team-popup");
+  const workPopup = document.querySelector(".work-popup");
+  const contactPopup = document.querySelector(".contact-popup");
+  document.querySelector(".team-button")?.addEventListener("click", () => {
+    teamPopup?.classList.remove("hidden");
+    workPopup?.classList.add("hidden");
+    contactPopup?.classList.add("hidden");
+  });
+  document.querySelector(".work-button")?.addEventListener("click", () => {
+    teamPopup?.classList.add("hidden");
+    workPopup?.classList.remove("hidden");
+    contactPopup?.classList.add("hidden");
+  });
+  document.querySelector(".contact-button")?.addEventListener("click", () => {
+    teamPopup?.classList.add("hidden");
+    workPopup?.classList.add("hidden");
+    contactPopup?.classList.remove("hidden");
+  });
+});

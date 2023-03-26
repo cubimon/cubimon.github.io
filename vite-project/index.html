@@ -4,29 +4,41 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vite + TS + three.js</title>
+  <title>Pidgeon Park</title>
 </head>
 
 <body>
   <canvas id="bg"></canvas>
-  <script>
-    function teamTab() {
-    }
-    function workTab() {
-    }
-    function contactTab() {
-    }
-  </script>
-  <div class="tabs">
-    <button class="tab-button team-button" onclick="teamTab()">
-    </button>
-    <button class="tab-button work-button" onclick="workTab()">
-    </button>
-    <button class="tab-button contact-button" onclick="contactTab()">
-    </button>
-  </div>
-  <div class="popup">
+  <div class="tabgroup">
+    <div class="tabs">
+      <button class="tab-button team-button">
+        <img src="src/svg/About.svg" />
+      </button>
+      <button class="tab-button work-button">
+        <img src="src/svg/Arbeiten.svg" />
+      </button>
+      <button class="tab-button contact-button">
+        <img src="src/svg/Kontakt.svg" />
+      </button>
+    </div>
+    <div class="popup">
+      <div class="team-popup">
+        <div class="heading">DAS TEAM</div>
+        <div class="team-entry">
+          <img src="src/svg/About_Polina1.svg" />
+          <div>
+            <div class="heading">Tom Will</div>
+            <div>asdflkjsdflk</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-popup hidden">
+      </div>
+      <div class="contact-popup hidden">
+      </div>
+    </div>
   </div>
   <script type="module" src="/src/main.ts"></script>
 </body>
