@@ -1,15 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS + three.js</title>
-    <script type="module" crossorigin src="/vite-project/dist/assets/index-27461c94.js"></script>
-    <link rel="stylesheet" href="/vite-project/dist/assets/index-97b06728.css">
-  </head>
-  <body>
-    <canvas id="bg"></canvas>
-    
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pidgeon Park</title>
+  <script type="module" crossorigin src="/vite-project/dist/assets/index-1eab5fbc.js"></script>
+  <link rel="stylesheet" href="/vite-project/dist/assets/index-5bcd7a81.css">
+</head>
+
+<body>
+  <canvas id="bg"></canvas>
+  <div class="tabgroup">
+    <div class="tabs">
+      <button class="tab-button team-button">
+        <img src="/vite-project/dist/assets/About-ccca075e.svg" />
+      </button>
+      <button class="tab-button work-button">
+        <img src="/vite-project/dist/assets/Arbeiten-848f64af.svg" />
+      </button>
+      <button class="tab-button contact-button">
+        <img src="/vite-project/dist/assets/Kontakt-1d6148cd.svg" />
+      </button>
+    </div>
+    <div class="popup">
+      <div class="team-popup">
+        <div class="heading">DAS TEAM</div>
+        <div class="team-entry">
+          <img src="/vite-project/dist/assets/About_Polina1-ab686b1e.svg" />
+          <div>
+            <div class="heading">Tom Will</div>
+            <div>asdflkjsdflk</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-popup hidden">
+      </div>
+      <div class="contact-popup hidden">
+      </div>
+    </div>
+  </div>
+  
+</body>
+
 </html>

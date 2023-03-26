@@ -58,7 +58,7 @@ function click(event: MouseEvent) {
   pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
   pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
   raycaster.setFromCamera(pointer, camera);
-  const intersects = raycaster.intersectObjects(scene.children);
+//  const intersects = raycaster.intersectObjects(scene.children);
 
   //for (const intersect of intersects) {
   //  alert(`clicked on ${intersect.object.name}`);
