@@ -22,8 +22,8 @@ canvas {
   --team-color: #b0daf9;
   --work-color: #bdfaeb;
   --contact-color: #F7959D;
-  --radius: 1em;
-  --button-width: 7em;
+  --radius: 0.5em;
+  --button-width: 3em;
 }
 
 .tabs {
@@ -90,7 +90,7 @@ canvas {
 .popup >.team-popup > .heading {
   justify-content: center;
   display: flex;
-  font-size: 5em;
+  font-size: 3em;
   font-weight: bold;
   padding-top: 0.3em;
 }
