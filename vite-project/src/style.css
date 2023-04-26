@@ -70,8 +70,8 @@ canvas {
 }
 
 .popup {
-  position: absolute;
-  width: min(1024px, 50%);
+  /* position: absolute; */
+  width: max(600px, 30%);
   height: min(1024px, 80%);
 }
 
@@ -87,7 +87,7 @@ canvas {
   background-color: var(--team-color);
 }
 
-.popup >.team-popup > .heading {
+.heading1 {
   justify-content: center;
   display: flex;
   font-size: 3em;
@@ -95,12 +95,12 @@ canvas {
   padding-top: 0.3em;
 }
 
-.popup >.team-popup > .team-entry {
-  display: flex;
+.heading2 {
+  font-size: 2em;
 }
 
-.popup >.team-popup > .team-entry > * > .heading {
-  font-size: 2em;
+.popup >.team-popup > .team-entry {
+  display: flex;
 }
 
 .popup >.team-popup > .team-entry > img {
@@ -113,5 +113,9 @@ canvas {
 
 .popup >.contact-popup {
   background-color: var(--contact-color);
+}
+
+.contact-text {
+  padding: 15%
 }
  

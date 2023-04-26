@@ -23,7 +23,9 @@ let camera: Camera = new PerspectiveCamera();
 loader.load(
   //"PigeonPark_Scene_Komplet.glb",
   // "PigeonPark_Scene_5- 27-2_embedded_unitless.gltf",
-  "assets/PigeonPark_Scene_5- 27-2_embedded_unitless.gltf",
+  // "PigeonPark_Scene_5_20-3.gltf",
+  "assets/PigeonPark_Scene_5_20-3.gltf",
+  // "assets/PigeonPark_Scene_5- 27-2_embedded_unitless.gltf",
   function (gltf: GLTF) {
     scene.add(gltf.scene);
     console.log(gltf);
