@@ -145,7 +145,7 @@ div {
 
 .topbar {
   /* TODO: remove*/
-  display: none !important;
+  /* display: none !important; */
   height: 20vh;
   display: flex;
   justify-content: center;
