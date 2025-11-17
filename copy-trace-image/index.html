@@ -1,0 +1,189 @@
+<html>
+  <head>
+    <style>
+      .work-area-element {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      img {
+        z-index: 1;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      video {
+        z-index: 0;
+      }
+      #work-area {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="uploadForm" enctype="multipart/form-data">
+      <div>
+        <label for="filePicker">Select Image(s):</label>
+        <input
+            type="file"
+            id="filePicker"
+            name="userFiles"
+            accept="image/*"
+            multiple
+        />
+      </div>
+      <div>
+        <input type="range" id="opacity" min="0" max="100" value="50" />
+        <label for="opacity">Opacity</label>
+      </div>
+      <div>
+        <input type="checkbox" id="mirror" checked />
+        <label for="mirror">Mirror</label>
+      </div>
+      <input type="button" id="reset" value="Reset">
+    </form>
+    <div id="work-area">
+      <video class="work-area-element"></video>
+      <img class="work-area-element" alt="Bild zum abpausen" />
+    </div>
+    <script>
+      // video
+      const constraints = {
+        video: { width: 1280, height: 720 },
+      };
+      const videoElement = document.querySelector('video');
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then((mediaStream) => {
+          videoElement.srcObject = mediaStream;
+          videoElement.onloadedmetadata = () => {
+            videoElement.play();
+          };
+        })
+        .catch((err) => {
+          console.error(`${err.name}: ${err.message}`);
+        });
+
+      // opacity
+      const opacityInput = document.getElementById('opacity');
+      const imageElement = document.querySelector('img');
+      updateOpacity();
+      opacityInput.addEventListener('change', (event) => {
+        updateOpacity();
+      });
+      function updateOpacity() {
+        imageElement.style.opacity = opacityInput.value / 100;
+      }
+
+      // file
+      const fileInput = document.getElementById('filePicker');
+      if (fileInput.value && fileInput.files.length > 0) {
+        loadFile(fileInput.files);
+      }
+      fileInput.addEventListener('change', (event) => {
+        loadFile(event.target.files)
+      });
+      function loadFile(files) {
+        if (files.length === 0) {
+            return;
+        }
+        if (files.length > 0) {
+          const file = files[0];
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            imageElement.src = e.target.result;
+          }
+          reader.readAsDataURL(file);
+        }
+      }
+
+      // mirror
+      const mirrorInput = document.getElementById('mirror');
+      updateMirror();
+      mirrorInput.addEventListener('change', (event) => {
+        updateMirror();
+      })
+      function updateMirror() {
+        let scale = 1;
+        if (mirrorInput.checked) {
+          scale = -1;
+        }
+        videoElement.style.transform = `scale(${scale}, 1)`;
+      }
+
+      // reset
+      const resetButton = document.getElementById('reset');
+      resetButton.addEventListener('click', () => {
+        offsetX = 0;
+        offsetY = 0;
+        imageElement.style.left = offsetX + 'px';
+        imageElement.style.top = offsetY + 'px';
+        localStorage.setItem('session', JSON.stringify({
+          offsetX: offsetX,
+          offsetY: offsetY
+        }));
+      });
+
+      // move image
+      const session = JSON.parse(localStorage.getItem('session'));
+      let isDragging = false;
+      let offsetX = session?.offsetX ?? 0;
+      let offsetY = session?.offsetY ?? 0;
+      imageElement.style.left = offsetX + 'px';
+      imageElement.style.top = offsetY + 'px';
+      let dragStartOffsetX = 0;
+      let dragStartOffsetY = 0;
+      const workArea = document.getElementById('work-area');
+      workArea.addEventListener('mousedown', (e) => {
+        dragStartOffsetX = e.clientX;
+        dragStartOffsetY = e.clientY;
+        isDragging = true;
+        document.body.style.cursor = 'grabbing';
+      });
+      document.addEventListener('mousemove', (e) => {
+        if (!isDragging) {
+          return;
+        }
+        let dragX = e.clientX - dragStartOffsetX;
+        let dragY = e.clientY - dragStartOffsetY;
+        let [newX, newY] = limitOffset([offsetX + dragX, offsetY + dragY])
+        imageElement.style.left = newX + 'px';
+        imageElement.style.top = newY + 'px';
+      });
+      document.addEventListener('mouseup', (e) => {
+        if (!isDragging) {
+          return;
+        }
+        let dragX = e.clientX - dragStartOffsetX;
+        let dragY = e.clientY - dragStartOffsetY;
+        offsetX += dragX;
+        offsetY += dragY;
+        [offsetX, offsetY] = limitOffset([offsetX, offsetY]);
+        imageElement.style.left = offsetX + 'px';
+        imageElement.style.top = offsetY + 'px';
+        isDragging = false;
+        document.body.style.cursor = 'move';
+        localStorage.setItem('session', JSON.stringify({
+          offsetX: offsetX,
+          offsetY: offsetY
+        }));
+      });
+      function limitOffset(offsets) {
+        if (offsets[0] < -imageElement.width) {
+          offsets[0] = -imageElement.width;
+        }
+        if (offsets[1] < -imageElement.height) {
+          offsets[1] = -imageElement.height;
+        }
+        if (offsets[0] > videoElement.videoWidth) {
+          offsets[0] = videoElement.videoWidth;
+        }
+        if (offsets[1] > videoElement.videoHeight) {
+          offsets[1] = videoElement.videoHeight;
+        }
+        return offsets;
+      }
+    </script>
+  </body>
+</html>
