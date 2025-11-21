@@ -38,6 +38,14 @@
         <label for="opacity">Opacity</label>
       </div>
       <div>
+        <input type="range" id="scale" min="1" max="500" value="100" />
+        <label for="scale">Scale</label>
+      </div>
+      <div>
+        <input type="range" id="rotation" min="0" max="359" value="0" />
+        <label for="rotation">Rotation</label>
+      </div>
+      <div>
         <input type="checkbox" id="mirror" checked />
         <label for="mirror">Mirror</label>
       </div>
@@ -75,6 +83,22 @@
       function updateOpacity() {
         imageElement.style.opacity = opacityInput.value / 100;
       }
+
+      // scale
+      const scaleInput = document.getElementById('scale');
+      scaleInput.addEventListener('change', updateTransform);
+
+      // rotation
+      const rotationInput = document.getElementById('rotation');
+      rotationInput.addEventListener('change', updateTransform);
+      function updateTransform() {
+        imageElement.style.transform = `
+        rotate(${rotationInput.value}deg)
+        scale(${scaleInput.value / 100})
+        `;
+      }
+
+      updateTransform();
 
       // file
       const fileInput = document.getElementById('filePicker');
